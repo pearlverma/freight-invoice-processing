@@ -1,0 +1,9 @@
+
+langchain
+langchain-core
+langchain-mistralai
+langchain-google-genai
+python-dotenv
+pymupdf<2.0
+cryptography==45.0.7
+
