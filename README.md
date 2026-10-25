@@ -4,16 +4,21 @@
 
 The Freight Invoice Processing System is a Python-based project designed to extract important information from freight invoices in PDF format, validate the extracted data, and store the results in a CSV file.
 
-The project uses PDF text extraction, AI-assisted information extraction, data validation, and structured data storage.
+The project combines PDF text extraction with AI-assisted information extraction using Google's Gemini API through LangChain.
 
 ## Features
 
-- Extract text from PDF invoices using PyMuPDF.
-- Use Google's Gemini API through LangChain for AI-assisted invoice field extraction.
-- Extract invoice number, invoice date, seller, buyer, and invoice total.
-- Validate required fields and invoice totals.
-- Store processed invoice records in CSV format.
-- Flag records that require further review.
+- **PDF Text Extraction:** Extracts text from freight invoice PDF files using PyMuPDF.
+- **AI-Powered Data Extraction:** Uses Gemini to identify and extract invoice details.
+- **Structured Information:** Extracts the following fields:
+  - Invoice Number
+  - Invoice Date
+  - Seller
+  - Buyer
+  - Invoice Total
+- **Data Validation:** Checks for missing required fields and validates the invoice total.
+- **Status Classification:** Classifies records as `valid`, `Needs review`, or `Invalid`.
+- **CSV Storage:** Stores extracted invoice information, processing status, and review reasons in a CSV file.
 
 ## Technologies Used
 
@@ -25,92 +30,71 @@ The project uses PDF text extraction, AI-assisted information extraction, data v
 - CSV
 - python-dotenv
 
-## How It Works
+## Project Workflow
 
-1. Read the invoice PDF.
-2. Extract text from the PDF.
-3. Send the extracted text to Gemini with instructions to return structured JSON.
-4. Parse the extracted information.
-5. Validate the required fields and invoice total.
-6. Assign a processing status and review reason.
-7. Append the result to a CSV file.
+1. Read the invoice PDF file.
+2. Extract text from the PDF using PyMuPDF.
+3. Send the extracted text to Gemini for structured information extraction.
+4. Parse the AI-generated response into JSON.
+5. Validate the extracted invoice fields.
+6. Assign a processing status and a reason if the invoice requires review.
+7. Append the processed record to `invoice_records.csv`.
 
-## Extracted Fields
+## Project Structure
 
-- Invoice Number
-- Invoice Date
-- Seller
-- Buyer
-- Invoice Total
+```text
+freight-invoice-processing/
+├── main.py
+├── pdf_extraction.py
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
 
-## Validation
+## Installation and Setup
 
-The application checks for missing required fields and invalid invoice totals. It assigns a status and records a reason when an invoice needs review.
-
-## Setup
-
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/pearlverma/freight-invoice-processing.git
 cd freight-invoice-processing
 ```
 
-Replace `YOUR_REPOSITORY_URL` with your repository's HTTPS URL.
+### 2. Create a Virtual Environment
 
-### 2. Create a virtual environment
+For macOS:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 3. Install dependencies
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configure the Gemini API key
+### 4. Configure the Gemini API Key
 
-Create a `.env` file in the project directory:
+Create a `.env` file in the project directory and add your Gemini API key:
 
 ```text
 GOOGLE_API_KEY=your_api_key_here
 ```
 
-Replace the placeholder with your own API key. Never commit the `.env` file to GitHub.
+Replace the placeholder with your own API key. Never upload your `.env` file or expose your API key publicly.
 
-### 5. Add a test invoice
+### 5. Add an Invoice PDF
 
-Place a test PDF named `invoice.pdf` in the project directory, matching the filename expected by the application.
+Place a test invoice named `invoice.pdf` in the project directory. The current code expects this filename.
 
-Use synthetic or anonymized invoice data for testing.
+Use sample or anonymized invoice data for testing.
 
-### 6. Run the project
+### 6. Run the Project
 
 ```bash
 python main.py
 ```
 
-The intended output is a CSV file containing extracted invoice fields, processing status, and review reasons.
-
-## Current Status
-
-The PDF extraction and validation workflow has been implemented. The Gemini API integration is still awaiting a successful end-to-end test because the API returned temporary availability errors during testing.
-
-Successful AI extraction and CSV generation should be verified when the model is available.
-
-## Future Improvements
-
-- Add robust API error handling and retries.
-- Implement a Python-based fallback for supported invoice formats.
-- Detect duplicate invoices.
-- Improve invoice-total reconciliation.
-- Add automated tests.
-- Support batch processing of multiple invoices.
-- Add logging and a user-friendly interface.
-
-## Disclaimer
-
-This project is a prototype. Extracted invoice data should be reviewed before being used for financial or business decisions.
+The
