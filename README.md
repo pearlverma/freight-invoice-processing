@@ -97,4 +97,45 @@ Use sample or anonymized invoice data for testing.
 python main.py
 ```
 
-The
+The extracted information and validation results are intended to be stored in invoice_records.csv.
+
+Validation Logic
+
+The project checks whether required invoice fields are missing and whether the invoice total is numeric and greater than zero.
+
+Depending on the validation outcome, a record is assigned a status:
+
+valid
+
+Needs review
+
+Invalid
+
+Records requiring review should be checked against the original invoice before their information is used.
+
+Testing Status
+
+A test run successfully received a response from Gemini and continued through the CSV-processing step. During that run, one invoice was classified as Needs review.
+
+This demonstrates that the API request and processing flow completed for that run. However, the extracted values still need to be checked against the original invoice, and additional testing is required to assess reliability across different invoice formats.
+
+
+Future Improvements
+
+Improve API error handling and response parsing.
+
+Add automated unit and integration tests.
+
+Support processing multiple invoices in one run.
+
+Detect duplicate invoices.
+
+Add more comprehensive invoice-total and line-item validation.
+
+Improve logging and error reporting.
+
+Develop a user-friendly interface.
+
+Disclaimer
+
+This project is a prototype for freight invoice information extraction and basic validation. All extracted information should be reviewed against the original invoice before being used for financial or business decisions.
